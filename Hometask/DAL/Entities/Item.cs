@@ -1,8 +1,9 @@
-﻿namespace Hometask.DAL.Entities
+﻿using Hometask.Shared;
+
+namespace Hometask.DAL.Entities
 {
-    internal class Item
+    public class Item : BaseEntity
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
         public float Price { get; set; }

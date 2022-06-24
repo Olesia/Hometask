@@ -1,14 +1,20 @@
 ﻿using Hometask.BLL.Dto;
+using Hometask.Common.Interfaces;
 
 namespace Hometask.BLL.Services
 {
-    internal class PrintService
+    public class PrintService : IPrintService
     {
-        public void PrintItems(List<ItemDto> items)
+        public void PrintItem(ItemDto item)
         {
-            foreach(var item in items)
+            Console.WriteLine($"Name: {item.Name}, Price: {item.Price}$");
+        }
+
+        public void PrintItemsList(IEnumerable<ItemDto> itemsList)
+        {
+            foreach(var item in itemsList)
             {
-                Console.WriteLine($"Name: {item.Name}, Price: {item.Price}$");
+                PrintItem(item);
             }
         }
     }
