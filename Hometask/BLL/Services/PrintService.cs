@@ -5,12 +5,12 @@ namespace Hometask.BLL.Services
 {
     public class PrintService : IPrintService
     {
-        public void PrintItem(ItemDto item)
+        public void PrintItem(CartItemDto cartItem)
         {
-            Console.WriteLine($"Name: {item.Name}, Price: {item.Price}$");
+            Console.WriteLine($"Name: {cartItem.Name}, Price: {cartItem.Price}$");
         }
 
-        public void PrintItemsList(IEnumerable<ItemDto> itemsList)
+        public void PrintItemsList(IEnumerable<CartItemDto> itemsList)
         {
             foreach(var item in itemsList)
             {

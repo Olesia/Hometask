@@ -3,13 +3,10 @@ using Hometask.Common.Interfaces;
 using Hometask.DAL.Entities;
 using Hometask.Data;
 using Hometask.DAL.Repositories;
-using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Hometask.BLL.Services;
-using AutoMapper;
-using Hometask.BLL.Dto;
 
-namespace Hometask
+namespace Hometask.WebApi
 {
     public static class ConfigureServices
     {
@@ -22,16 +19,10 @@ namespace Hometask
             
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            services.AddScoped<IRepository<Item>, Repository<Item>>();
-            services.AddScoped<IRepository<CartItem>, Repository<CartItem>>();
+            services.AddTransient<IRepository<CartItem>, Repository<CartItem>>();
 
-            services.AddScoped<IItemService, ItemService>();
-            services.AddScoped<ICartItemSevice, CartItemService>();
-            services.AddScoped<IPrintService, PrintService>();
-
-
-
-
+            services.AddTransient<ICartService, CartService>();
+            services.AddTransient<IPrintService, PrintService>();
 
             return services;
         }

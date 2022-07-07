@@ -8,7 +8,8 @@ namespace Hometask.BLL.Mappings
     {
         public AutoMapping()
         {
-            CreateMap<Item, ItemDto>();
+            //CreateMap<Item, ItemDto>();
+            //CreateMap<ItemDto, Item>();
             CreateMap<CartItem, CartItemDto>();
             CreateMap<CartItemDto, CartItem>();
         }

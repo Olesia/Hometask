@@ -4,7 +4,7 @@ namespace Hometask.Common.Interfaces
 {
     public interface IPrintService
     {
-        void PrintItem(ItemDto item);
-        void PrintItemsList(IEnumerable<ItemDto> itemsList);
+        void PrintItem(CartItemDto item);
+        void PrintItemsList(IEnumerable<CartItemDto> itemsList);
     };
 }

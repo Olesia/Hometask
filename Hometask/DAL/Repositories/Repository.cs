@@ -1,5 +1,6 @@
 ﻿using Hometask.Common.Interfaces;
 using Hometask.Shared;
+using System.Linq.Expressions;
 
 namespace Hometask.DAL.Repositories
 {
@@ -12,20 +13,19 @@ namespace Hometask.DAL.Repositories
             _dbContext = dbContext;
         }
 
-        public virtual IEnumerable<T> List(string collectionName)
+        public virtual IEnumerable<T> ListFiltered(string collectionName, Expression<Func<T, bool>>? predicate)
         {
-            return _dbContext.Database.GetCollection<T>(collectionName).FindAll(); ;
+            IEnumerable<T> result = predicate != null ?
+                _dbContext.Database.GetCollection<T>(collectionName).Query().Where(predicate).ToList() :
+                _dbContext.Database.GetCollection<T>(collectionName).FindAll().ToList();
+            return result;
         }
 
-        public virtual T GetById(Guid id, string collectionName)
+        public bool Insert(T entity, string collectionName)
         {
-            return _dbContext.Database.GetCollection<T>(collectionName).Query().Where(c=>c.Id == id).FirstOrDefault();
-        }
-
-        public Guid Insert(T entity, string collectionName)
-        {
-            return _dbContext.Database.GetCollection<T>(collectionName)
+            var id = _dbContext.Database.GetCollection<T>(collectionName)
                 .Insert(entity);
+            return id != null;
         }
        
         public bool Delete(Guid id, string collectionName)
