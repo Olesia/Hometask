@@ -8,8 +8,16 @@ using Hometask.BLL.Services;
 
 namespace Hometask.WebApi
 {
+    /// <summary>
+    /// Services configuration
+    /// </summary>
     public static class ConfigureServices
     {
+        /// <summary>
+        /// Startup configurations extension method
+        /// </summary>
+        /// <param name="services"> This services</param>
+        /// <returns> This services </returns>
         public static IServiceCollection AddStartupServices(this IServiceCollection services)
         {
             services.AddSingleton<IApplicationDbContext, ApplicationDbContext>();
