@@ -99,7 +99,7 @@ namespace Hometask.WebApi.Controllers
         /// <returns> True if item was deleted </returns>
         /// <response code="404"> The cart item was not found </response>
         
-        [HttpDelete("{cartId},{itemId}")]
+        [HttpDelete("{cartId}/items/{itemId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<bool> Delete(string cartId, int itemId)
         {
