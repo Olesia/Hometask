@@ -9,6 +9,7 @@ namespace Hometask.Common.Interfaces
         IEnumerable<T> ListFiltered(string collectionName, Expression<Func<T, bool>> predicate);
         //T GetById(Guid id, string collectionName);
         bool Insert(T entity, string collectionName);
+        bool Update(T entity, string collectionName);
         bool Delete(Guid id, string collectionName);
     }
 }

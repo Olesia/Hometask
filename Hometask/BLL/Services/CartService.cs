@@ -58,6 +58,29 @@ namespace Hometask.BLL.Services
             return _сartItemRepository.Insert(cartItem, Constants.CartItemsCollectionName);
         }
 
+        public bool UpdateCartItems(ItemDto itemDto)
+        {
+            Expression<Func<CartItem, bool>>? filter = e => e.ExternalId == itemDto.Id;
+            var existedCartItems = _сartItemRepository.ListFiltered(Constants.CartItemsCollectionName, filter);
+
+            if (!existedCartItems.Any())
+            {
+                throw new KeyNotFoundException($"No cart item with id: { itemDto.Id } found");
+            }
+
+            bool result = true;
+            foreach (var item in existedCartItems)
+            {
+                item.Name = itemDto.Name;
+                item.Image = itemDto.Image;
+                item.Price = itemDto.Price;
+                var isUpdated = _сartItemRepository.Update(item, Constants.CartItemsCollectionName);
+                result = result && isUpdated;
+            }
+
+            return result;
+        }
+
         public bool DeleteCartItem(string cartId, int itemId)
         {
             Expression<Func<CartItem, bool>> ? filter = e => e.CartId == cartId && e.ExternalId == itemId;

@@ -27,7 +27,14 @@ namespace Hometask.DAL.Repositories
                 .Insert(entity);
             return id != null;
         }
-       
+
+        public bool Update(T entity, string collectionName)
+        {
+           var result = _dbContext.Database.GetCollection<T>(collectionName)
+               .Update(entity);
+           return result;
+        }
+
         public bool Delete(Guid id, string collectionName)
         {
             return _dbContext.Database.GetCollection<T>(collectionName)

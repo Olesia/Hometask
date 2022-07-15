@@ -5,10 +5,11 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddStartupServices();
+builder.Services.AddStartupServices(builder.Configuration);
+builder.Services.AddControllers();
 
-builder.Services.AddControllers();
-builder.Services.AddControllers();
+#region API Versioning
+
 builder.Services.AddApiVersioning(x =>
 {
     x.DefaultApiVersion = new ApiVersion(1, 0);
@@ -22,6 +23,12 @@ builder.Services.AddVersionedApiExplorer(options =>
     options.GroupNameFormat = "'v'VVV";
     options.SubstituteApiVersionInUrl = true;
 });
+
+#endregion
+
+
+
+#region Swagger configurations
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -46,9 +53,7 @@ builder.Services.AddSwaggerGen(options =>
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
-
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -58,6 +63,16 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint($"/swagger/v2/swagger.json", "Cart API. V2");
     });
 }
+
+#endregion
+
+#region Message Listener
+using (var scope = app.Services.CreateScope())
+{
+    var listener = scope.ServiceProvider.GetRequiredService<MessageListener>();
+    await listener.StartListening();
+}
+#endregion
 
 app.UseHttpsRedirection();
 

@@ -7,6 +7,7 @@ namespace Hometask.Common.Interfaces
         CartDto GetCartInfo(string cartId);
         IEnumerable<CartItemDto> GetCartItems(string cartId);
         bool AddCartItem(CartItemDto cartItemDto);
+        bool UpdateCartItems(ItemDto cartItemDto);
         bool DeleteCartItem(string cartId, int cartItemId);
     }
 }
